@@ -1,0 +1,7 @@
+setup.py
+sogou_tr/__init__.py
+sogou_tr/sogou_tr.py
+sogou_tr_free.egg-info/PKG-INFO
+sogou_tr_free.egg-info/SOURCES.txt
+sogou_tr_free.egg-info/dependency_links.txt
+sogou_tr_free.egg-info/top_level.txt

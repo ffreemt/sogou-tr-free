@@ -1,5 +1,5 @@
 r'''
-"baidu translate based on token/baiduid/gtk https://fanyi.baidu.com"
+"sogou translate"
 '''
 # pylint: disable=invalid-name
 from pathlib import Path

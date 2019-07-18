@@ -1,4 +1,4 @@
-# baidu-tr-free
+# sogou-tr-free
 
 Sogou translate for free -- local cache plus throttling. Let's hope it lasts.
 

@@ -3,6 +3,7 @@ sogou_tr.py
 含10小时本地缓存，非缓存访问限流平均每次 0.6秒
 
 固定盐UUID0，不知道能用多久…… 希望有高人整任意盐
+模糊匹配源语言和目标语言开关
 
 cache and throttle (avg 0.5 sec) for non-cache requests
 

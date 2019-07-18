@@ -18,7 +18,8 @@ from sogou_tr import sogou_tr
 print(sogou_tr('hello world'))  # -> '你好世界'
 print(sogou_tr('hello world', to_lang='de'))  # ->'Hallo Welt'
 print(sogou_tr('hello world', to_lang='fr'))  # ->'Salut tout le monde'
-print(sogou_tr('hello world', to_lang='ja'))  # ->'ハローワールド'```
+print(sogou_tr('hello world', to_lang='ja'))  # ->'ハローワールド'
+```
 
 ### Acknowledgments
 

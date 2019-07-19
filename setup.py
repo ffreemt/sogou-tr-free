@@ -8,7 +8,8 @@ import re
 from setuptools import setup, find_packages
 
 name = """sogou-tr-free"""
-description = ' '.join(name.split('-'))
+# description = ' '.join(name.split('-'))
+description = name.replace('-tr-', 'translate for')
 dir_name, = find_packages()
 
 version, = re.findall(r"__version__\W*=\W*'([^']+)'", open(Path(__file__).parent / f'{dir_name}/__init__.py').read())

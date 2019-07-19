@@ -6,7 +6,7 @@ Sogou translate for free -- local cache plus throttling. Let's hope it lasts.
 * Install (pip or whatever) necessary requirements, e.g. ```
 pip install requests_cache jmespath
 fuzzywuzzy``` or ```
-pip -r requirements.txt```
+pip install -r requirements.txt```
 * Drop the file sogou_tr.py in any folder in your PYTHONPATH (check with import sys; print(sys.path)
 * or clone the repo (e.g., ```git clone git@github.com:ffreemt/sogou-tr-free.git``` or download https://github.com/ffreemt/sogou-tr-free/archive/master.zip and unzip) and change to the sogou-tr-free folder and do a ```
 python setup.py develop```

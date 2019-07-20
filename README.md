@@ -2,7 +2,7 @@
 
 Sogou translate for free -- local cache plus throttling. Let's hope it lasts.
 
-### Install
+### Installation
 * Install (pip or whatever) necessary requirements, e.g. ```
 pip install requests_cache jmespath
 fuzzywuzzy``` or ```

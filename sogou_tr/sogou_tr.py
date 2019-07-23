@@ -2,8 +2,12 @@ r'''
 sogou_tr.py
 含10小时本地缓存，非缓存访问限流平均每次 0.6秒
 
-固定盐UUID0，不知道能用多久…… 希望有高人整任意盐
-模糊匹配源语言和目标语言开关
+UUID can be obtained in the following way:
+js_url = 'https://dlweb.sogoucdn.com/translate/pc/static/js/app.55db663a.js'
+js_str = requests.get(js_url).text
+_ = re.findall(r'var\sV=s\(""\+P\+O\+M\+"(\w+)?"\)', js_str)
+UUID = _[0] if _ else ''
+assert len(UUID) == 32
 
 cache and throttle (avg 0.5 sec) for non-cache requests
 
@@ -38,15 +42,15 @@ if '__file__' not in globals():
 
 HOME_FOLDER = Path.home()
 CACHE_NAME = (Path(HOME_FOLDER) / (Path(__file__)).stem).as_posix()
-EXPIRE_AFTER = 3600
+EXPIRE_AFTER = 36000
 
-requests_cache.install_cache()
-requests_cache.core.configure(
-    cache_name=CACHE_NAME,
-    expire_after=EXPIRE_AFTER,
-    allowable_codes=(200, ),
-    allowable_methods=('GET', 'POST')
-)  # post ok
+# requests_cache.install_cache()
+# requests_cache.core.configure(
+    # cache_name=CACHE_NAME,
+    # expire_after=EXPIRE_AFTER,
+    # allowable_codes=(200, ),
+    # allowable_methods=('GET', 'POST')
+# )  # post ok
 
 URL0 = 'https://fanyi.sogou.com'
 URL = "https://fanyi.sogou.com/reventondc/translateV2"
@@ -56,20 +60,8 @@ HEADERS = {
     "origin": URL0,
     "User-Agent": UA,
 }
-# UUID0 = '8954e2993f18dd83fd05e79bd6dd040e'  # valid
 
-# https://github.com/hujingshuang/MTrans/issues/12
-UUID0 = '41ee21a5ab5a13f72687a270816d1bfd'  # valid
-
-# http://www.zhongruitech.com/692929882.html
-UUID0 = '9ee4f0a1102eee31d09b55e4d66931fd'  # invalid
-
-# from sogou_js.py in playground
-# UUID0 = '7d1221f5eaa9a940aa4d91a0218b12f7'
-# invalid
-
-# from app.js
-UUID0 = '8954e2993f18dd83fd05e79bd6dd040e'  # valid
+UUID = '8954e2993f18dd83fd05e79bd6dd040e'  # valid
 
 # SESS = requests.Session()
 SESS = requests_cache.CachedSession(
@@ -182,8 +174,8 @@ def sogou_tr(  # pylint: disable=too-many-locals,  too-many-statements, too-many
         sogou_tr.text = 'nothing to do'
         return text
 
-    # str_ = 'auto' + 'zh-CHS' + text + UUID0
-    str_ = from_lang + to_lang + text + UUID0
+    # str_ = 'auto' + 'zh-CHS' + text + UUID
+    str_ = from_lang + to_lang + text + UUID
     md5 = hashlib.md5(str_.encode('utf-8'))
     sign = md5.hexdigest()
 

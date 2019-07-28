@@ -1,8 +1,10 @@
 # sogou-tr-free
 
-Sogou translate for free -- local cache plus throttling. Let's hope it lasts.
+Sogou translate for free -- local cache plus throttling (1.5 calls/s from 1001st call on). Let's hope it lasts.
 
 ### Installation
+``` pip install sogou-tr-free -U```
+or
 * Install (pip or whatever) necessary requirements, e.g. ```
 pip install requests_cache jmespath
 fuzzywuzzy``` or ```

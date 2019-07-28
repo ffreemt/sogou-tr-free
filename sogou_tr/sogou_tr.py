@@ -1,6 +1,6 @@
 r'''
 sogou_tr.py
-含10小时本地缓存，非缓存访问限流平均每次 0.6秒
+含10小时本地缓存，非缓存访问限流从1001次开始平均每次 0.67秒
 
 UUID can be obtained in the following way:
 js_url = 'https://dlweb.sogoucdn.com/translate/pc/static/js/app.55db663a.js'
@@ -112,7 +112,7 @@ def make_throttle_hook(timeout=1):
     return hook
 
 
-SESS.hooks = {'response': make_throttle_hook(0.6)}
+SESS.hooks = {'response': make_throttle_hook()}
 SESS.get(URL0)
 
 
@@ -242,7 +242,7 @@ def sogou_tr(  # pylint: disable=too-many-locals,  too-many-statements, too-many
     try:
         trtext = search('data.translate.dit', jdata)
     except Exception as exc:
-        LOGGER.error('jmespath search(\'data.translate.dit\' error: ', exc)
+        LOGGER.error('jmespath search(\'data.translate.dit\' error: %s', exc)
     if not trtext:  # pragma: no cover
 
         trtext = jdata.get('info')
@@ -330,7 +330,7 @@ def main():  # pragma: no cover
         print('Provide some text')
         sys.exit(0)
     text = ' '.join(sys.argv[1:])
-    print(sogou_tr(text),'\n')
+    print(sogou_tr(text), '\n')
 
     print(sogou_tr(text, to_lang='de'))
     print(sogou_tr(text, to_lang='fr'))

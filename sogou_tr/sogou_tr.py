@@ -2,6 +2,29 @@ r'''
 sogou_tr.py
 含10小时本地缓存，非缓存访问限流从1001次开始平均每次 0.67秒
 
+UUID changed 2019-09-06
+    pypi-projects\sogou-tr-free\other-projects\tk-secode.js
+    function tk(a,c){var d,e,f,g,h,i;for(d=c.split("."),e=Number(d[0])||0,f=[],g=0,h=0;h<a.length;h++)i=a.charCodeAt(h),128>i?f[g++]=i:(2048>i?f[g++]=192|i>>6:(55296==(64512&i)&&h+1<a.length&&56320==(64512&a.charCodeAt(h+1))?(i=65536+((1023&i)<<10)+(1023&a.charCodeAt(++h)),f[g++]=240|i>>18,f[g++]=128|63&i>>12):f[g++]=224|i>>12,f[g++]=128|63&i>>6),f[g++]=128|63&i);for(a=e,g=0;g<f.length;g++)a+=f[g],a=b(a,"+-a^+6");return a=b(a,"+-3^+b+-f"),a^=Number(d[1])||0,0>a&&(a=(2147483647&a)+2147483648),a%=1e6,a.toString()+(a^e)}
+    window.seccode=tk(12,"2344578");
+
+var V = window.seccode,
+    J = s("" + R + O + M + V),
+    W = {
+        "from": R,
+        "to": O,
+        "text": M,
+        "client": "pc",
+        "fr": "browser_pc",
+        "pid": "sogou-dict-vr",
+        "dict": !0,
+        "word_group": !0,
+        "second_query": !0,
+        "uuid": B,
+        "needQc": f.need,
+        "s": J
+    };
+
+obsolet：
 UUID can be obtained in the following way:
 js_url = 'https://dlweb.sogoucdn.com/translate/pc/static/js/app.55db663a.js'
 js_str = requests.get(js_url).text
@@ -59,9 +82,11 @@ UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, 
 HEADERS = {
     "origin": URL0,
     "User-Agent": UA,
+    'Referer': 'https://fanyi.sogou.com/',
 }
 
 UUID = '8954e2993f18dd83fd05e79bd6dd040e'  # valid
+SECCODE = '8511813095151'  # V
 
 # SESS = requests.Session()
 SESS = requests_cache.CachedSession(
@@ -175,7 +200,8 @@ def sogou_tr(  # pylint: disable=too-many-locals,  too-many-statements, too-many
         return text
 
     # str_ = 'auto' + 'zh-CHS' + text + UUID
-    str_ = from_lang + to_lang + text + UUID
+    # SECDOE = TK(12,"2344578")  # key = TK(12,"2344578")  # '8511813095151'
+    str_ = from_lang + to_lang + text + SECCODE
     md5 = hashlib.md5(str_.encode('utf-8'))
     sign = md5.hexdigest()
 

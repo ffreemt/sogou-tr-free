@@ -277,7 +277,8 @@ def sogou_tr(  # pylint: disable=too-many-locals,  too-many-statements, too-many
             trtext = ''
 
         if 'unknown error' in trtext:
-            trtext += f' -- maybe invalid target language [{to_lang}]'
+            # trtext += f' -- maybe invalid target language [{to_lang}]'
+            trtext += ' -- maybe invalid target language [%s]' % to_lang
 
     # failed that
     if not trtext:  # pragma: no cover

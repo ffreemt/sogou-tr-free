@@ -1,8 +1,8 @@
 '''
 version__ = '0.0.2'
 date__ = '2019.7.18'
-__version__ = '0.0.3'
-__date__ = '2019.9.7'
+version__ = '0.0.3'
+date__ = '2019.9.7'
 '''
 from sogou_tr.sogou_tr import sogou_tr
 

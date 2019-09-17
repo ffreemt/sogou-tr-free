@@ -5,7 +5,7 @@ r'''
 from pathlib import Path
 import re
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages  # type: ignore
 
 name = """sogou-tr-free"""
 # description = ' '.join(name.split('-'))

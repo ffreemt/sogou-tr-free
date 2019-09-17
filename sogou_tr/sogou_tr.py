@@ -46,11 +46,10 @@ from uuid import uuid4
 # import pytest
 
 # import requests
-import requests_cache
+import requests_cache  # type: ignore
 
-from jmespath import search
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
+from jmespath import search  # type: ignore
+from fuzzywuzzy import fuzz, process  # type: ignore
 
 # __version__ = '0.0.2'  # added coverage test
 # __date__ = '2019.7.1'
@@ -64,16 +63,18 @@ if '__file__' not in globals():
     __file__ = 'ipython_sessioin.py'
 
 HOME_FOLDER = Path.home()
-CACHE_NAME = (Path(HOME_FOLDER) / (Path(__file__)).stem).as_posix()
+CACHE_NAME = (HOME_FOLDER / Path(__file__).stem).as_posix()
 EXPIRE_AFTER = 36000
 
-# requests_cache.install_cache()
-# requests_cache.core.configure(
-    # cache_name=CACHE_NAME,
-    # expire_after=EXPIRE_AFTER,
-    # allowable_codes=(200, ),
-    # allowable_methods=('GET', 'POST')
-# )  # post ok
+_ = '''
+requests_cache.install_cache()
+requests_cache.core.configure(
+    cache_name=CACHE_NAME,
+    expire_after=EXPIRE_AFTER,
+    allowable_codes=(200, ),
+    allowable_methods=('GET', 'POST')
+)  # post ok
+# '''
 
 URL0 = 'https://fanyi.sogou.com'
 URL = "https://fanyi.sogou.com/reventondc/translateV2"

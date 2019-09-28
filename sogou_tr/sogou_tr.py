@@ -86,8 +86,10 @@ HEADERS = {
     'Referer': 'https://fanyi.sogou.com/',
 }
 
-UUID = '8954e2993f18dd83fd05e79bd6dd040e'  # valid
+UUID = '4f80db82-1c5f-49ce-840e-838d26598f69'  # 20190929
+UUID = '8954e2993f18dd83fd05e79bd6dd040e'  # valid？
 SECCODE = '8511813095151'  # V
+SECCODE = '8511813095152'  # V 20190929
 
 # SESS = requests.Session()
 SESS = requests_cache.CachedSession(

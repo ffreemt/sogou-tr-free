@@ -1,4 +1,7 @@
 r'''
+TODO：fetch window.seccode from httml
+    https://fanyi.sogou.com/logtrace
+
 sogou_tr.py
 含10小时本地缓存，非缓存访问限流从1001次开始平均每次 0.67秒
 
@@ -45,7 +48,7 @@ from uuid import uuid4
 
 # import pytest
 
-# import requests
+import requests
 import requests_cache  # type: ignore
 
 from jmespath import search  # type: ignore
@@ -78,18 +81,26 @@ requests_cache.core.configure(
 
 URL0 = 'https://fanyi.sogou.com'
 URL = "https://fanyi.sogou.com/reventondc/translateV2"
+# SNUID = requests.utils.dict_from_cookiejar(requests.get('https://fanyi.sogou.com/#auto/zh-CHS/test%201111').cookies).get('SNUID')
+SNUID = 'D788E671ABAF3FDB5E7FCC3BAB1F8BFE'
+# assert SNUID, '%s: Not able to obatain SNUID' % __file__
 
 UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17'  # NOQA
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'  # NOQA
 HEADERS = {
     "origin": URL0,
     "User-Agent": UA,
     'Referer': 'https://fanyi.sogou.com/',
+    # 'Pragma': 'no-cache',
+    # 'Cookie': 'SNUID=%s' % SNUID,
 }
 
 UUID = '4f80db82-1c5f-49ce-840e-838d26598f69'  # 20190929
 UUID = '8954e2993f18dd83fd05e79bd6dd040e'  # valid？
 SECCODE = '8511813095151'  # V
+# https://fanyi.sogou.com devtools/source logtrace
 SECCODE = '8511813095152'  # V 20190929
+
 
 # SESS = requests.Session()
 SESS = requests_cache.CachedSession(
@@ -97,6 +108,9 @@ SESS = requests_cache.CachedSession(
     expire_after=EXPIRE_AFTER,
     allowable_methods=('GET', 'POST'),
 )
+import requests
+SESS = requests.Session()
+
 SOGOUTR_CODES = ['auto', 'ar', 'et', 'bg', 'pl', 'ko', 'bs-Latn', 'fa', 'mww', 'da', 'de', 'ru', 'fr', 'fi', 'tlh-Qaak', 'tlh', 'hr', 'otq', 'ca', 'cs', 'ro', 'lv', 'ht', 'lt', 'nl', 'ms', 'mt', 'pt', 'ja', 'sl', 'th', 'tr', 'sr-Latn', 'sr-Cyrl', 'sk', 'sw', 'af', 'no', 'en', 'es', 'uk', 'ur', 'el', 'hu', 'cy', 'yua', 'he', 'zh-CHS', 'it', 'hi', 'id', 'zh-CHT', 'vi', 'sv', 'yue', 'fj', 'fil', 'sm', 'to', 'ty', 'mg', 'bn']  # pylint: disable=C0301  # NOQA
 
 # https://github.com/imWildCat/sogou-translate/blob/master/sogou_translate.py
@@ -141,7 +155,8 @@ def make_throttle_hook(timeout=1):
 
 
 SESS.hooks = {'response': make_throttle_hook()}
-SESS.get(URL0)
+# SESS.get(URL0)
+SESS.get('https://fanyi.sogou.com/#auto/zh-CHS/test%201111')
 
 
 def sogou_tr(  # pylint: disable=too-many-locals,  too-many-statements, too-many-branches, too-many-arguments

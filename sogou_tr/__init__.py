@@ -6,6 +6,6 @@ date__ = '2019.9.7'
 '''
 from sogou_tr.sogou_tr import sogou_tr
 
-__version__ = '0.0.5'
-__date__ = '2019.9.28'
+__version__ = '0.0.6'
+__date__ = '2019.10.9'
 VERSION = __version__

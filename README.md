@@ -1,6 +1,6 @@
 # sogou-tr-free
 
-Sogou translate for free -- local cache plus throttling (1.5 calls/s from 1001st call on). Let's hope it lasts.
+Sogou translate for free --  no more local cache (looks like there is some problem with the requests_cache package, will take a close look later), throttling (1.5 calls/s from 1001st call on). Let's hope it lasts.
 
 ### Installation
 ``` pip install -U sogou-tr-free```

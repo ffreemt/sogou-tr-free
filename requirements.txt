@@ -1,3 +1,4 @@
-requests_cache
+requests
+# requests_cache
 jmespath
 fuzzywuzzy

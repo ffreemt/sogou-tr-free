@@ -7,7 +7,7 @@ Sogou translate for free --  no more local cache (looks like there is some probl
 
 or
 * Install (pip or whatever) necessary requirements, e.g. ```
-pip install requests_cache jmespath
+pip install requests requests_cache jmespath
 fuzzywuzzy``` or ```
 pip install -r requirements.txt```
 * Drop the file sogou_tr.py in any folder in your PYTHONPATH (check with import sys; print(sys.path)

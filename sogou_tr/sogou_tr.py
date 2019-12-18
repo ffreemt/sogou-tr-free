@@ -98,7 +98,13 @@ SNUID = '6F07B875ABAF3DDCBB3B456CAB4A4834'
 # bcookies = browser_cookie3.chrome(domain_name='sogou.com')
 # requests.utils.dict_from_cookiejar(bcookies).get('SNUID')
 SNUID = '375FE12CF3F764820D7F8EF7F3907BAB'
+SNUID = 'C0A917DB050093A5A165B461053EECA1'
 
+# sess.get('https://fanyi.sogou.com/'); [*sess.cookies.iteritems()]
+# next(dropwhile(lambda elm: elm[0] != 'SNUID', sess.cookies.iteritems()))[1]
+SNUID = 'B2EA8512C8CC5E61427A9D16C9CE36DA'
+
+from .get_snuid import SNUID
 
 UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17'  # NOQA
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'  # NOQA
@@ -166,7 +172,7 @@ def make_throttle_hook(timeout=1):
         if not getattr(response, 'from_cache', False):
             # print(f'sleeping {timeout} s')
 
-            timeout0 = min(0, timeout - 0.5) + random()
+            timeout0 = min(0, timeout - 0.5 + random())
             LOGGER.debug('sleeping %s', timeout0)
 
             sleep(timeout0)
@@ -281,7 +287,7 @@ def sogou_tr(  # pylint: disable=too-many-locals,  too-many-statements, too-many
                 headers=HEADERS,
                 # headers=headers,
                 timeout=timeout,
-                cookies=COOKIES,
+                # cookies=COOKIES,
             )
             resp.raise_for_status()
             sogou_tr.text = resp.text
@@ -315,9 +321,9 @@ def sogou_tr(  # pylint: disable=too-many-locals,  too-many-statements, too-many
         tr_error = str(exc)
     # normal: jdata.get('data') is not None
     if tr_error and jdata.get('data') is None:
+        LOGGER.info('jdata: %s', jdata)
         LOGGER.error('get(\'translate\').get(\'errorCode\') error: %s, maybe because daily free quota exceeded or capture verification required \n (acccess http://fanyi.sogou.com to verify)', tr_error)
 
-        LOGGER.info('jdata: %s', jdata)
         return None
 
     try:

@@ -16,7 +16,7 @@ from .sogou_tr import sogou_tr
 
 # from sogou_tr.sogou_tr import main as __main__
 
-__version__ = "0.0.9a"
+__version__ = "0.0.10"
 __date__ = "2020.08.17"
 VERSION = __version__.split(".")
 

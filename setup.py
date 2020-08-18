@@ -37,6 +37,7 @@ setup(
         'requests_cache',
         'jmespath',
         'fuzzywuzzy',
+        'langid',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

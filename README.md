@@ -1,4 +1,4 @@
-# sogou-tr-free
+# sogou-tr-free [![PyPI version](https://badge.fury.io/py/sogou-tr-free.svg)](https://badge.fury.io/py/sogou-tr-free)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Sogou translate for free --  no more local cache (looks like there is some problem with the requests_cache package, will take a close look later), throttling (1.5 calls/s from 1001st call on). Let's hope it lasts.
 
@@ -19,11 +19,25 @@ python setup.py develop```
 ```
 from sogou_tr import sogou_tr
 print(sogou_tr('hello world'))  # -> '你好世界'
-print(sogou_tr('hello world', to_lang='de'))  # ->'Hallo Welt'
-print(sogou_tr('hello world', to_lang='fr'))  # ->'Salut tout le monde'
+print(sogou_tr('hello world', to_lang='de'))  # -> 'Hallo Welt'
+print(sogou_tr('hello world', to_lang='fr'))  # -> 'Salut tout le monde'
 print(sogou_tr('hello world', to_lang='ja'))  # ->'ハローワールド'
 ```
 
-### Acknowledgments
+#### Speedup
+For each request made by `sogou_tr`, a vlaid `SNUID` is reqired. It takes time to acquire a SNUID, however. On the other hand, the SNUID can be used for a certain time period.
 
-* Thanks to everyone whose code was used
+Hence, `sogout_tr` has a parameter to control whether to update SNUID or not.  The parameter is, well, called `update_snuid`. By default, `update_snuid=True`. You can turn it off to speed things up:
+```
+text = "test 1232"
+res = sogou_tr(text, update_snuid=False)
+```
+How do we know the SNUID is still valid? sogou_tr will throw an `Exception("sogou server likely acting up")` when the SNUID is no longer valid. Therefore, we might do something like this:
+```
+text = "test 1232"
+try:
+    res = sogou_tr(text, update_snuid=False)
+except Exception as exc:
+    if "server likely acting up" in str(exc):
+        res = sogou_tr(text, update_snuid=True)
+```

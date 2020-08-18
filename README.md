@@ -1,6 +1,6 @@
 # sogou-tr-free [![PyPI version](https://badge.fury.io/py/sogou-tr-free.svg)](https://badge.fury.io/py/sogou-tr-free)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-Sogou translate for free --  no more local cache (looks like there is some problem with the requests_cache package, will take a close look later), throttling (1.5 calls/s from 1001st call on). Let's hope it lasts.
+Sogou translate for free -- local cache, throttling (1.5 calls/s from 1001st call on). Let's hope it lasts.
 
 ### Update
 

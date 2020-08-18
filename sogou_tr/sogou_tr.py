@@ -59,6 +59,9 @@ from fuzzywuzzy import fuzz, process  # type: ignore
 # __date__ = '2019.7.1'
 # VERSION = __version__
 
+from gevent import monkey  # fix: RecursionError: maximum recursion depth exceeded while calling a Python object
+monkey.patch_all(ssl=False)
+
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.NullHandler())
 

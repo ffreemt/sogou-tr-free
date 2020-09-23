@@ -42,6 +42,8 @@ playground\sogou-fanyi\sogou_tr.py
 """
 # import logging
 from pathlib import Path
+
+import re
 from time import sleep
 from random import random, randint  # pylint: disable=unused-import
 import hashlib
@@ -61,6 +63,12 @@ from jmespath import search  # type: ignore
 from fuzzywuzzy import fuzz, process  # type: ignore
 
 from logzero import logger
+# or
+# import logzero
+# logger = logzero.setup_logger(name=__name__, level=20)
+# or
+# from logzero import setup_logger
+# logger = setup_logger()
 
 from sogou_tr.get_snuid import get_snuid
 from sogou_tr.get_snuid import SNUID
@@ -210,7 +218,7 @@ def make_throttle_hook(timeout=1):
     Returns a response hook function which sleeps for `timeout` seconds if
     response is not cached
 
-    time.sleep(min(0, timeout - 0.5) + random())
+    time.sleep(max(0, timeout - 0.5) + random())
         average delay: timeout
 
     s = requests_cache.CachedSession()
@@ -223,8 +231,11 @@ def make_throttle_hook(timeout=1):
         if not getattr(response, "from_cache", False):
             # print(f'sleeping {timeout} s')
 
-            timeout0 = min(0, timeout - 0.5 + random())
-            logger.debug("sleeping %s", timeout0)
+            # timeout0 = minx(0, timeout - 0.5 + random())
+            timeout0 = timeout - 0.82 + random()
+            if timeout0 < 0:
+                timeout0 = 0
+            logger.debug("sleeping %s s", round(timeout0, 2))
 
             sleep(timeout0)
         return response
@@ -420,7 +431,11 @@ def sogou_tr(  # pylint: disable=too-many-locals,  too-many-statements, too-many
 
     # raise Exception(" sogou server acting up")
     langid_ = classify(trtext)
-    if langid_[0] not in [to_lang[:2]]:
+    logger.debug(" text: %s, langid: %s", trtext, langid_)
+
+    _ = re.sub(r"[^a-zA-Z]+", " ", trtext)
+
+    if len(_) > 10 and langid_[0] not in [to_lang[:2]] :
         logger.warning(
             " to_lang: %s, detected lang: %s, trans text: %s",
             to_lang,
@@ -428,11 +443,12 @@ def sogou_tr(  # pylint: disable=too-many-locals,  too-many-statements, too-many
             trtext[:40],
         )
         raise Exception(" sogou server likely acting up")
-    if langid_[1] > 0:
-        logger.warning(" lang detection confidence level to low: %s", langid_[1])
-        raise Exception(" sogou server likely acting up")
 
-    # SNUID = getsnuid() update HEADERS.update('Cookie': 'SNUID=%s' % SNUID,}) and retry?
+    if len(_) > 10 and langid_[1] > 0:
+        logger.warning(" lang detection confidence level too low: %s", langid_[1])
+        raise Exception(" sogou server likely acting up, lang detection: %s %.2f" % langid_)
+
+    # SNUID = getsnuid() update HEADERS.update('Cookie': langid_'SNUID=%s' % SNUID,}) and retry?
 
     return trtext
 

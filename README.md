@@ -38,10 +38,13 @@ res = sogou_tr(text, update_snuid=False)
 ```
 How do we know the SNUID is still valid? sogou_tr will throw an `Exception("sogou server likely acting up")` when the SNUID is no longer valid. Therefore, we might do something like this:
 ```
+from time import sleep
+
 text = "test 1232"
 try:
     res = sogou_tr(text, update_snuid=False)
 except Exception as exc:
     if "server likely acting up" in str(exc):
+        sleep(3)
         res = sogou_tr(text, update_snuid=True)
 ```

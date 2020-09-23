@@ -16,8 +16,8 @@ from .sogou_tr import sogou_tr
 
 # from sogou_tr.sogou_tr import main as __main__
 
-__version__ = "0.0.10"
-__date__ = "2020.08.17"
+__version__ = "0.0.11"
+__date__ = "2020.09.23"
 VERSION = __version__.split(".")
 
 __all__ = ["get_snuid", "sogou_tr"]
